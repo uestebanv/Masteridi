@@ -1,0 +1,60 @@
+﻿@model ML.Emisor
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src=" https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href=" https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+@Scripts.Render("~/bundles/jquery")
+<div class="container">
+    <h2 class="text-center">Formulario de Emisores</h2>
+    <h5>Ingrese la información del nuevo Emisor</h5>
+    <hr />
+
+    @using (Html.BeginForm("Form", "Emisor", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(model => model.IdEmisor)
+
+        <div class="row">
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.RFC)
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
+                    @Html.TextBoxFor(model => model.RFC, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.FechaInicioOperacion)
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
+                    @Html.TextBoxFor(model => model.FechaInicioOperacion, new { @class = "form-control", @type = "date" })
+                </div>
+
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.Capital)
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
+                    @Html.TextBoxFor(model => model.Capital, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <button id="btnGuardar" class="btn btn-success" type="submit"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+            <a id="btnCancelar" onmouseover="CambiarColor()" class="btn btn-danger" href="@Url.Action("Index", "Emisor")"><i class="fa-solid fa-right-from-bracket"></i> Volver</a>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+    $("#btnGuardar").mouseenter(function () {
+        $("#btnGuardar").addClass("fa-beat").mouseout(function () {
+            $("#btnGuardar").removeClass("fa-beat")
+        })
+    })
+    function CambiarColor() {
+        $("#btnCancelar").toggleClass("btn-danger btn-secondary")
+    }
+</script>

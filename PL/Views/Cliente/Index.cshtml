@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form id="emisorForm">
+    <label for="rfc">RFC:</label><br>
+    <input type="text" id="rfc" name="rfc"><br>
+    <label for="fechaInicioOperacion">Fecha de inicio de operación:</label><br>
+    <input type="date" id="fechaInicioOperacion" name="fechaInicioOperacion"><br>
+    <label for="capital">Capital:</label><br>
+    <input type="number" id="capital" name="capital"><br>
+    <input type="submit" value="Registrar">
+</form>
+
+<table id="emisoresTable">
+    <thead>
+        <tr>
+            <th>Editar</th>
+            <th>IdEmisor</th>
+            <th>RFC</th>
+            <th>Fecha de inicio de operación</th>
+            <th>Capital</th>
+            <th>Eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        function getEmisores() {
+            $.ajax({
+                url: 'https://localhost:44337/api/Emisor/GetAll',
+                dataType: 'JSON',
+                data: "",
+                type: 'GET',
+                success: function (emisores) {
+                    $('#emisoresTable tbody').empty();
+                    $.each(emisores.Emisores, function (i, emisor) {
+                        $('#emisoresTable tbody').append(
+                            "<tr>"
+                            + "<td>" + '<a href="#" class = "btn btn-warning"(' + emisor.IdEmisor + ')">' + "EDITAR" + '</a>' + "</td>"
+                            + "<td>" + emisor.IdEmisor + "</td>"
+                            + "<td>" + emisor.RFC + "</td>"
+                            + "<td>" + emisor.FechaInicioOperacion + "</td>"
+                            + "<td>" + emisor.Capital + "</td>"
+                            + "<td>" + '<a href="#" class = "btn btn-danger" (' + emisor.IdEmisor + ')">' + "ELIMINAR" + '</a>' + "</td>"
+                            + "</tr>");
+                    });
+                },
+                error: function (error) {
+                    alert('No se pudo obtener la lista de emisores');
+                }
+            });
+        }
+
+        $('#emisorForm').submit(function (e) {
+            e.preventDefault();
+
+            var data = {
+                RFC: $('#rfc').val(),
+                FechaInicioOperacion: $('#fechaInicioOperacion').val(),
+                Capital: $('#capital').val()
+            };
+
+            $.ajax({
+                url: 'https://localhost:44337/api/Emisor/Add',
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                success: function (idEmisor) {
+                    alert('Se agrego correctamente el Emisor y su Id Asignado es: ' + idEmisor);
+                    getEmisores();
+                },
+                error: function (error) {
+                    alert('No se pudo agregar el Emisor');
+                }
+            });
+        });
+
+        getEmisores();
+    });
+</script>

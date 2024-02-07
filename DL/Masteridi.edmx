@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MasteridiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Emisor">
+          <Key>
+            <PropertyRef Name="IdEmisor" />
+          </Key>
+          <Property Name="IdEmisor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RFC" Type="varchar" MaxLength="50" />
+          <Property Name="FechaInicioOperacion" Type="date" />
+          <Property Name="Capital" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <Function Name="EmisorAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RFC" Type="varchar" Mode="In" />
+          <Parameter Name="FechaInicioOperacion" Type="date" Mode="In" />
+          <Parameter Name="Capital" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="EmisorDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdEmisor" Type="int" Mode="In" />
+        </Function>
+        <Function Name="EmisorGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="EmisorGetById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdEmisor" Type="int" Mode="In" />
+        </Function>
+        <Function Name="EmisorUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdEmisor" Type="int" Mode="In" />
+          <Parameter Name="RFC" Type="varchar" Mode="In" />
+          <Parameter Name="FechaInicioOperacion" Type="date" Mode="In" />
+          <Parameter Name="Capital" Type="decimal" Mode="In" />
+        </Function>
+        <EntityContainer Name="MasteridiModelStoreContainer">
+          <EntitySet Name="Emisor" EntityType="Self.Emisor" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MasteridiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Emisor">
+          <Key>
+            <PropertyRef Name="IdEmisor" />
+          </Key>
+          <Property Name="IdEmisor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RFC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaInicioOperacion" Type="DateTime" Precision="0" />
+          <Property Name="Capital" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityContainer Name="MasteridiEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Emisor" EntityType="Self.Emisor" />
+          <FunctionImport Name="EmisorDelete">
+          <Parameter Name="IdEmisor" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="EmisorGetAll" ReturnType="Collection(MasteridiModel.EmisorGetAll_Result)" />
+          <FunctionImport Name="EmisorGetById" ReturnType="Collection(MasteridiModel.EmisorGetById_Result)">
+          <Parameter Name="IdEmisor" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="EmisorUpdate">
+            <Parameter Name="IdEmisor" Mode="In" Type="Int32" />
+            <Parameter Name="RFC" Mode="In" Type="String" />
+            <Parameter Name="FechaInicioOperacion" Mode="In" Type="DateTime" />
+            <Parameter Name="Capital" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="EmisorAdd" ReturnType="Collection(Int32)">
+            <Parameter Name="RFC" Mode="In" Type="String" />
+            <Parameter Name="FechaInicioOperacion" Mode="In" Type="DateTime" />
+            <Parameter Name="Capital" Mode="In" Type="Decimal" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="EmisorGetAll_Result">
+          <Property Type="Int32" Name="IdEmisor" Nullable="false" />
+          <Property Type="String" Name="RFC" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="FechaInicioOperacion" Nullable="true" />
+          <Property Type="Decimal" Name="Capital" Nullable="true" Precision="18" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="EmisorGetById_Result">
+          <Property Type="Int32" Name="IdEmisor" Nullable="false" />
+          <Property Type="String" Name="RFC" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="FechaInicioOperacion" Nullable="true" />
+          <Property Type="Decimal" Name="Capital" Nullable="true" Precision="18" Scale="0" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MasteridiModelStoreContainer" CdmEntityContainer="MasteridiEntities">
+          <EntitySetMapping Name="Emisor">
+            <EntityTypeMapping TypeName="MasteridiModel.Emisor">
+              <MappingFragment StoreEntitySet="Emisor">
+                <ScalarProperty Name="IdEmisor" ColumnName="IdEmisor" />
+                <ScalarProperty Name="RFC" ColumnName="RFC" />
+                <ScalarProperty Name="FechaInicioOperacion" ColumnName="FechaInicioOperacion" />
+                <ScalarProperty Name="Capital" ColumnName="Capital" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="EmisorDelete" FunctionName="MasteridiModel.Store.EmisorDelete" />
+          <FunctionImportMapping FunctionImportName="EmisorGetAll" FunctionName="MasteridiModel.Store.EmisorGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MasteridiModel.EmisorGetAll_Result">
+                <ScalarProperty Name="IdEmisor" ColumnName="IdEmisor" />
+                <ScalarProperty Name="RFC" ColumnName="RFC" />
+                <ScalarProperty Name="FechaInicioOperacion" ColumnName="FechaInicioOperacion" />
+                <ScalarProperty Name="Capital" ColumnName="Capital" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="EmisorGetById" FunctionName="MasteridiModel.Store.EmisorGetById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MasteridiModel.EmisorGetById_Result">
+                <ScalarProperty Name="IdEmisor" ColumnName="IdEmisor" />
+                <ScalarProperty Name="RFC" ColumnName="RFC" />
+                <ScalarProperty Name="FechaInicioOperacion" ColumnName="FechaInicioOperacion" />
+                <ScalarProperty Name="Capital" ColumnName="Capital" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="EmisorUpdate" FunctionName="MasteridiModel.Store.EmisorUpdate" />
+          <FunctionImportMapping FunctionImportName="EmisorAdd" FunctionName="MasteridiModel.Store.EmisorAdd" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
